@@ -2,6 +2,8 @@
 
 Query your Counter-Strike (not only) servers from ruby!
 
+Made with https://developer.valvesoftware.com/wiki/Server_queries.
+
 ## Installation
 
 Add this line to your application's Gemfile:
