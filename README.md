@@ -1,4 +1,4 @@
-# Cheist
+# Cheist [![Build Status](https://travis-ci.org/simi/cheist.png?branch=master)](https://travis-ci.org/simi/cheist)
 
 Query your Counter-Strike (not only) servers from ruby!
 
