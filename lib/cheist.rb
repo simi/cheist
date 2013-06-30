@@ -12,7 +12,7 @@ module Cheist
 
     u = UDPSocket.open
     u.send(cmd , 0, ip, port)
-    response = u.recvfrom(65536)[0]
+    p response = u.recvfrom(65536)[0]
     server = Cheist::Parser.parse(response)
     return server
   end

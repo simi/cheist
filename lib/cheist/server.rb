@@ -1,6 +1,6 @@
 class Cheist::Server
   attr_accessor :version, :name, :map, :mod, :game_name,
-    :players, :max_players, :server_id
+    :players, :max_players
 
   def to_hash
     {
