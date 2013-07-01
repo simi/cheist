@@ -59,8 +59,8 @@ module Cheist::Parser
 
     if version == GOLDSOURCE
       # protocol version
-      version = response.slice!(0)
-      server.version = version.unpack("C")[0]
+      proto_version = response.slice!(0)
+      server.version = proto_version.unpack("C")[0]
     end
     return server
 
