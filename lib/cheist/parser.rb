@@ -23,8 +23,7 @@ module Cheist::Parser
 
     if version == SOURCE
       # protocol version
-      proto_version = response.slice!(0)
-      server.version = proto_version.unpack("C")[0]
+      server.version = self.next_byte(response)
     end
 
     if version == GOLDSOURCE
@@ -50,17 +49,14 @@ module Cheist::Parser
     end
 
     # players
-    players = response.slice!(0)
-    server.players = players.unpack("C")[0]
+    server.players = self.next_byte(response)
 
     # max players
-    max_players = response.slice!(0)
-    server.max_players = max_players.unpack("C")[0]
+    server.max_players = self.next_byte(response)
 
     if version == GOLDSOURCE
       # protocol version
-      proto_version = response.slice!(0)
-      server.version = proto_version.unpack("C")[0]
+      server.version = self.next_byte(response)
     end
     return server
 
@@ -74,6 +70,12 @@ module Cheist::Parser
       break if char == "\x00"
       result << char
     end
+    return result
+  end
+
+  def self.next_byte(string)
+    result = string.slice!(0)
+    result = result.unpack("C")[0]
     return result
   end
 end
