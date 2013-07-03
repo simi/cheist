@@ -12,8 +12,15 @@ module Cheist
 
     u = UDPSocket.open
     u.send(cmd , 0, ip, port)
-    response = u.recvfrom(65536)[0]
-    server = Cheist::Parser.parse(response)
-    return server
+    response = if select([u], nil, nil, 2)
+             u.recvfrom(65536)
+           end
+    u.close
+    if response
+      server = Cheist::Parser.parse(response[0])
+      return server
+    else
+      raise "Timeout"
+    end
   end
 end
