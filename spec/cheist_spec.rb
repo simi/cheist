@@ -7,9 +7,17 @@ describe Cheist do
   }
 
   context "::query" do
-    it "returns Cheist::Server" do
+    it "returns Cheist::Server when socket respond" do
+      UDPSocket.any_instance.should_receive(:send).and_return(true)
+      IO.should_receive(:select).and_return(true)
       UDPSocket.any_instance.should_receive(:recvfrom).and_return(response)
       expect(query.class).to eq(Cheist::Server)
+    end
+
+    it "raises Timeout after timeout" do
+      UDPSocket.any_instance.should_receive(:send).and_return(true)
+      IO.should_receive(:select).and_return(false)
+      expect{query.class}.to raise_error(Cheist::TimeoutResponse)
     end
   end
 end

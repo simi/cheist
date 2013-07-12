@@ -5,6 +5,7 @@ require "cheist/server"
 
 module Cheist
   class InvalidResponse < Exception; end
+  class TimeoutResponse < Exception; end
 
   def self.query(ip, port)
     query = "TSource Engine Query"
@@ -12,7 +13,7 @@ module Cheist
 
     u = UDPSocket.open
     u.send(cmd , 0, ip, port)
-    response = if select([u], nil, nil, 2)
+    response = if IO.select([u], nil, nil, 2)
              u.recvfrom(65536)
            end
     u.close
@@ -20,7 +21,7 @@ module Cheist
       server = Cheist::Parser.parse(response[0])
       return server
     else
-      raise "Timeout"
+      raise TimeoutResponse
     end
   end
 end
